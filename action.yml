@@ -1,0 +1,23 @@
+name: 'SQL Migration Lock & Safety Checker'
+description: 'A single `CREATE INDEX` without `CONCURRENTLY` or `ALTER TABLE ADD COLUMN NOT NULL` locks production tables for minutes,'
+author: 'Ricardo Vieira Forge Cloud'
+branding:
+  icon: 'database'
+  color: 'yellow'
+inputs:
+  migrations-dir:
+    description: 'Directory containing .sql migration files'
+    required: false
+    default: 'migrations'
+  fail-on-error:
+    description: 'Fail workflow if table-locking DDL is detected'
+    required: false
+    default: 'true'
+outputs:
+  issues-count:
+    description: 'Number of unsafe SQL statements detected'
+  safe:
+    description: 'true if no unsafe DDL/DML detected'
+runs:
+  using: 'node20'
+  main: 'src/index.js'
